@@ -103,51 +103,9 @@ if mode is None:
 
     xbmcplugin.endOfDirectory(addon_handle)
 
-elif mode[0] == 'tags':
-    # Show tags from br.json (unique tags from all stations)
-    tag_set = set()
-    for s in stations_from_br:
-        if s.get('tags'):
-            tag_set.update(t.strip() for t in s['tags'].split(','))
-    for tag in sorted(tag_set):
-        localUrl = build_url({'mode': 'stations', 'key': 'tag', 'value': base64.b32encode(tag.encode('utf-8'))})
-        li = xbmcgui.ListItem(tag, iconImage='DefaultFolder.png')
-        xbmcplugin.addDirectoryItem(handle=addon_handle, url=localUrl, listitem=li, isFolder=True)
-
-    xbmcplugin.endOfDirectory(addon_handle)
-
-elif mode[0] == 'countries':
-    # Show countries from br.json (DE, etc.)
-    country_set = set()
-    for s in stations_from_br:
-        if s.get('countrycode'):
-            country_set.add(s['countrycode'])
-    for country in sorted(country_set):
-        localUrl = build_url({'mode': 'stations', 'key': 'countrycode', 'value': base64.b32encode(country.encode('utf-8'))})
-        li = xbmcgui.ListItem(country, iconImage='DefaultFolder.png')
-        xbmcplugin.addDirectoryItem(handle=addon_handle, url=localUrl, listitem=li, isFolder=True)
-
-    xbmcplugin.endOfDirectory(addon_handle)
-
 elif mode[0] == 'stations':
     # Handle filtering by tag, country, or show all
     all_stations = stations_from_br
-
-    if 'key' in args:
-        key = args['key'][0]
-        value = base64.b32decode(args['value'][0]).decode('utf-8')
-
-        if key == 'tag':
-            # Filter by tag
-            filtered = []
-            for station in all_stations:
-                tags = station.get('tags', '')
-                if value.lower() in [t.strip().lower() for t in tags.split(',') if t]:
-                    filtered.append(station)
-            all_stations = filtered
-
-        elif key == 'countrycode':
-            all_stations = [s for s in all_stations if s.get('countrycode') == value]
 
     # Now add them
     for station in all_stations:
@@ -177,16 +135,6 @@ elif mode[0] == 'play':
         xbmcplugin.setResolvedUrl(addon_handle, True, xbmcgui.ListItem(path=uri))
     else:
         xbmcplugin.setResolvedUrl(addon_handle, False, xbmcgui.ListItem())
-
-elif mode[0] == 'search':
-    dialog = xbmcgui.Dialog()
-    d = dialog.input(LANGUAGE(32011), type=xbmcgui.INPUT_ALPHANUM)
-    if d:
-        filtered = [s for s in stations_from_br if d.lower() in s.get('name', '').lower()]
-        for station in filtered:
-            bitrate = station.get('bitrate', '128')
-            addLink(station['stationuuid'], station['name'], station['url'], station.get('favicon', ''), str(bitrate))
-        xbmcplugin.endOfDirectory(addon_handle)
 
 elif mode[0] == 'mystations':
     for station in my_stations.values():
