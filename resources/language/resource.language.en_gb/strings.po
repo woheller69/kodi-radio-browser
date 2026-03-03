@@ -17,35 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgctxt "#32000"
-msgid "Top 100 clicked stations"
-msgstr ""
-
-msgctxt "#32001"
-msgid "Top 100 voted stations"
-msgstr ""
-
-msgctxt "#32002"
-msgid "Last 100 changed stations"
-msgstr ""
-
-msgctxt "#32003"
-msgid "Last 100 clicked stations"
-msgstr ""
-
-msgctxt "#32004"
-msgid "Tags"
-msgstr ""
-
-msgctxt "#32005"
-msgid "Countries"
-msgstr ""
-
-msgctxt "#32006"
-msgid "All"
-msgstr ""
-
-msgctxt "#32007"
-msgid "Search..."
+msgid "Available stations"
 msgstr ""
 
 msgctxt "#32008"
@@ -60,6 +32,3 @@ msgctxt "#32010"
 msgid "Add Station"
 msgstr ""
 
-msgctxt "#32011"
-msgid "Search Station"
-msgstr ""

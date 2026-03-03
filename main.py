@@ -92,19 +92,15 @@ mode = args.get('mode', None)
 if mode is None:
     # Instead of fetching from radio-browser, show all stations from br.json
     li = xbmcgui.ListItem(LANGUAGE(32000), iconImage='DefaultFolder.png')
-    li.setProperty('Fanart_Image', 'special://home/addons/plugin.audio.radiobrowser/fanart.jpg')
+    li.setProperty('Fanart_Image', 'special://home/addons/plugin.audio.radiobrowser/resources/fanart.jpg')
     xbmcplugin.addDirectoryItem(handle=addon_handle,
                                 url=build_url({'mode': 'stations', 'url': 'all'}),
                                 listitem=li,
                                 isFolder=True)
-    # Optionally: Add other static folders with no remote dependency
-    # E.g., filter by country or tag (if your br.json has countrycode etc.)
-    # For now, just one top-level list
 
     xbmcplugin.endOfDirectory(addon_handle)
 
 elif mode[0] == 'stations':
-    # Handle filtering by tag, country, or show all
     all_stations = stations_from_br
 
     # Now add them
